@@ -9,9 +9,27 @@ def dernierCoup(coups: dict[int, list[list[int] | list]]):
 
     return (coups[prev_index], coups[last_index])
 
-
 def annulerDernierCoup(coups: dict[int, list[list[int] | list]]):
-    return
+    """annule le coup précédent et supprime la
+       dernière configuration dictionnaire"""
+    avant_dernier, dernier_coup = dernierCoup(coups)
+    n_disque = None #numéro du disque à déplacer
+    nb_disques = 0  #nombre de disques du plateau
+    #obtenir le numéro de disque à déplacer pour annuler le coup
+    for i in range(3):
+        if len(dernier_coup[i]) > len(avant_dernier[i]):
+            n_disque = dernier_coup[i][-1]
+    #obtenir le nombre de disques
+    for i in dernier_coup:
+        nb_disques += len(i)
+    
+    #annulation du dernier coup
+    effaceDisque(n_disque, dernier_coup, nb_disques)
+    dessineDisque(n_disque, avant_dernier, nb_disques)
+    del coups(len(coups)-1)
+
+    return coups
+
 
 
 # TESTS
